@@ -5,7 +5,7 @@ export const chatListLoader = (queryClient: QueryClient) => async () => {
   return null;
 };
 
-export const ChatListRoute = () => {
+export const ChatListPage = () => {
   return (
     <>
       <h1>Chat List Route</h1>

@@ -1,17 +1,17 @@
 import { QueryClient } from '@tanstack/react-query';
 import { createBrowserRouter } from 'react-router-dom';
 import { AppRoot } from './app/root';
-import { chatLoader } from './ChatRoute';
-import { chatListLoader } from './ChatListRoute';
+import { chatLoader } from '../../pages/ChatPage';
+import { chatListLoader } from '../../pages/ChatListPage';
 
 export const createRouter = (queryClient: QueryClient) => {
   return createBrowserRouter([
     {
       path: '/login',
       lazy: async () => {
-        const { LoginRoute } = await import('./LoginRoute');
+        const { LoginPage } = await import('../../pages/LoginPage');
         return {
-          Component: LoginRoute,
+          Component: LoginPage,
         };
       },
     },
@@ -22,9 +22,9 @@ export const createRouter = (queryClient: QueryClient) => {
         {
           path: 'chatList',
           lazy: async () => {
-            const { ChatListRoute } = await import('./ChatListRoute');
+            const { ChatListPage } = await import('../../pages/ChatListPage');
             return {
-              Component: ChatListRoute,
+              Component: ChatListPage,
             };
           },
           loader: chatListLoader(queryClient),
@@ -32,9 +32,9 @@ export const createRouter = (queryClient: QueryClient) => {
         {
           path: 'chat',
           lazy: async () => {
-            const { ChatRoute } = await import('./ChatRoute');
+            const { ChatPage } = await import('../../pages/ChatPage');
             return {
-              Component: ChatRoute,
+              Component: ChatPage,
             };
           },
           loader: chatLoader(queryClient),
@@ -44,8 +44,8 @@ export const createRouter = (queryClient: QueryClient) => {
     {
       path: '*',
       lazy: async () => {
-        const { NotFoundRoute } = await import('./NotFoundRoute');
-        return { Component: NotFoundRoute };
+        const { NotFoundPage } = await import('../../pages/NotFoundPage');
+        return { Component: NotFoundPage };
       },
     },
   ]);
