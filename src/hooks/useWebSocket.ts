@@ -15,6 +15,7 @@ export const useWebSocket = () => {
       if (wsRef.current) {
         wsRef.current.onopen = () => {
           console.log('connected');
+          setLimit(0);
         };
 
         wsRef.current.onclose = (error) => {
