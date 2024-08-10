@@ -1,20 +1,30 @@
 import React from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Form, Link } from 'react-router-dom';
 import '../assets/Login.css';
 
-const Login=()=>{
-  const [email, setEmail] = useState("");
+import { login } from '../api/auth';
+
+type Props = {}
+
+const Login: React.FC<Props>=()=>{
+  const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // 여기에 실제 로그인 로직을 구현할 수 있습니다.
-    if (email === 'hello' && password === 'world') {
-      alert('Login successful!');
-    } else {
-      alert('Invalid credentials');
-    }
+
+    const email: string = e.currentTarget.email.value;
+    const password: string = e.currentTarget.password.value;
+    
+    login(email, password).then(
+      ()=>{
+        window.location.reload();
+      },
+      (error)=>{
+        console.error(error.toString());
+      }
+    );
   };
 
   return(
@@ -26,12 +36,12 @@ const Login=()=>{
         <h2>DevKord</h2>
         <form onSubmit={handleLogin}>
           <div className="input-box">
-            <label htmlFor="email">ID</label>
+            <label htmlFor="email">email</label>
             <input
               type="text"
               id="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setemail(e.target.value)}
               required
             />
           </div>
