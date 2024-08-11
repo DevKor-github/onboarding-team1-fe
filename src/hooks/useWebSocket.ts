@@ -6,7 +6,7 @@ const RETRY_LIMIT = 5;
 export const useWebSocket = () => {
   const websocketRef = useRef<null | WebSocket>(null);
   const [message, setMessage] = useState();
-  const [limit, setLimit] = useState(0);
+  const retryCount = useRef(0);
 
   useEffect(() => {
     websocketRef.current = new WebSocket(WS_URL);
@@ -15,16 +15,16 @@ export const useWebSocket = () => {
       if (wsRef.current) {
         wsRef.current.onopen = () => {
           console.log('connected');
-          setLimit(0);
+          retryCount.current = 0;
         };
 
         wsRef.current.onclose = (error) => {
           console.log('onclosed');
           console.log(error);
-          if (error.code !== 1000 && limit < RETRY_LIMIT) {
+          if (error.code !== 1000 && retryCount.current < RETRY_LIMIT) {
             wsRef.current = new WebSocket(WS_URL);
             setWebSocket(wsRef);
-            setLimit(limit + 1);
+            retryCount.current += 1;
           }
         };
 
