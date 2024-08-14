@@ -2,9 +2,9 @@ import React from 'react';
 import { useState } from 'react';
 import { Form, Link } from 'react-router-dom';
 import '../assets/Login.css';
-
 import { login } from '../api/auth';
-
+import { LogoM } from '../assets/LogoM';
+import { StatusBar } from '../assets/StatusBar';
 type Props = {}
 
 const Login: React.FC<Props>=()=>{
@@ -14,21 +14,20 @@ const Login: React.FC<Props>=()=>{
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const email: string = e.currentTarget.email.value;
-    const password: string = e.currentTarget.password.value;
-    
     login(email, password).then(
       ()=>{
+        <Link to="/chatlist"/>
         window.location.reload();
       },
       (error)=>{
+        console.log("email: ", email, "password: ", password);
         console.error(error.toString());
       }
     );
   };
 
   return(
-    <div className="container">
+    <div className="bg-white flex flex-row justify-center w-full">
       <div className="login-box">
         <div className="avatar">
           <span role="img" aria-label="lock">🔒</span>
@@ -61,7 +60,11 @@ const Login: React.FC<Props>=()=>{
           <Link to="/register">Don't have an account? Register</Link>
         </div>
       </div>
+
+      
     </div>
+
+    
 
   );
 };
