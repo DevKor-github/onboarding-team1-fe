@@ -23,25 +23,25 @@ export const ChatPage = () => {
         <MyChatBox style={'tail'} text={'시험용 채팅입니다'} time={date} isChecked={false} />
         <MyChatBox style={'none'} text={'.........'} time={date} isChecked={false} />
         <MyChatBox style={'none'} text={'시험용'} time={date} isChecked={false} />
-        <OtherChatBox style={'tail'} text={'시험용 채팅입니다'} time={date} />
+        <OtherChatBox profileImgUrl={AVATAR_URL} style={'tail'} text={'시험용 채팅입니다'} time={date} />
         <OtherChatBox style={'none'} text={'시험용 채팅입니다'} time={date} />
         <OtherChatBox style={'none'} text={'시험용 채팅입니다'} time={date} />
         <MyChatBox style={'tail'} text={'시험용 채팅입니다'} time={date} isChecked={false} />
         <MyChatBox style={'none'} text={'시험용 채팅입니다'} time={date} isChecked={false} />
         <MyChatBox style={'none'} text={'시험용 채팅입니다'} time={date} isChecked={false} />
-        <OtherChatBox style={'tail'} text={'시험용 채팅입니다'} time={date} />
+        <OtherChatBox profileImgUrl={AVATAR_URL} style={'tail'} text={'시험용 채팅입니다'} time={date} />
         <OtherChatBox style={'none'} text={'시험용 채팅입니다'} time={date} />
         <OtherChatBox style={'none'} text={'시험용 채팅입니다'} time={date} />
         <MyChatBox style={'tail'} text={'시험용 채팅입니다'} time={date} isChecked={false} />
         <MyChatBox style={'none'} text={'시험용 채팅입니다'} time={date} isChecked={false} />
         <MyChatBox style={'none'} text={'시험용 채팅입니다'} time={date} isChecked={false} />
-        <OtherChatBox style={'tail'} text={'시험용 채팅입니다'} time={date} />
+        <OtherChatBox profileImgUrl={AVATAR_URL} style={'tail'} text={'시험용 채팅입니다'} time={date} />
         <OtherChatBox style={'none'} text={'시험용 채팅입니다'} time={date} />
         <OtherChatBox style={'none'} text={'시험용 채팅입니다'} time={date} />
         <MyChatBox style={'tail'} text={'시험용 채팅입니다'} time={date} isChecked={false} />
         <MyChatBox style={'none'} text={'시험용 채팅입니다'} time={date} isChecked={false} />
         <MyChatBox style={'none'} text={'시험용 채팅입니다'} time={date} isChecked={false} />
-        <OtherChatBox style={'tail'} text={'시험용 채팅입니다'} time={date} />
+        <OtherChatBox profileImgUrl={AVATAR_URL} style={'tail'} text={'시험용 채팅입니다'} time={date} />
         <OtherChatBox style={'none'} text={'시험용 채팅입니다'} time={date} />
         <OtherChatBox style={'none'} text={'시험용 채팅입니다'} time={date} />
       </div>

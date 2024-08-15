@@ -1,5 +1,6 @@
 import { RoundProfile } from './RoundProfile';
 import MainLogo from '@assets/logo_main.svg';
+import SettingButton from '../assets/dots_icon.svg';
 
 export const ChatHeader = ({ userName, imgUrl }: { userName: string; imgUrl: string }) => {
   return (
@@ -12,7 +13,9 @@ export const ChatHeader = ({ userName, imgUrl }: { userName: string; imgUrl: str
           <RoundProfile imgUrl={imgUrl} size="small" />
           <div className="mx-2">{userName}</div>
         </div>
-        <>dots</>
+        <button className="h-4 w-4">
+          <SettingButton />
+        </button>
       </div>
     </header>
   );

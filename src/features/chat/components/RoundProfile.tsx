@@ -5,7 +5,7 @@ const profileVariants = {
 };
 
 type ProfileProps = {
-  imgUrl: string;
+  imgUrl?: string;
   size: 'small' | 'normal' | 'large';
 };
 
