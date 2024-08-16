@@ -4,7 +4,7 @@ import Login from "../features/login/components/Login";
 export const LoginPage = () => {
   return (
     <>
-      <Login></Login>
+      <Login/>
     </>
   );
 };

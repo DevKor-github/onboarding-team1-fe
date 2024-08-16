@@ -3,6 +3,9 @@ module.exports = {
   content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily:{
+        montserrat: ['Montserrat', 'sans-serif', 'Pretendard'],
+      },
       colors: {
         "bg-1": "var(--bg-1)",
         bgffffff: "var(--bgffffff)",
