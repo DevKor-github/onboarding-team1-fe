@@ -4,20 +4,17 @@ Please share your feedback here: https://form.asana.com/?k=uvp-HPgd3_hyoXRBw1IcN
 */
 
 interface Props {
-  color: "light"| "dark" ;
-  className: any;
-  vectorClassName: any;
-  vector: string;
-  divClassName: any;
+  size: string;
+  fontSize: number;
 }
 
-export const LogoM = ()=> {
+export const LogoM = ({size="", fontSize}:Props): JSX.Element=> {
   return (
     <div className="flex items-center w-[234px] gap-[6px]">
       <img className="flex "
-      alt="logo" src = "src/features/login/assets/vector-2.svg"/>
+      alt="logo" src = {`src/features/login/assets/${size}`}/>
       <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Roboto&display=swap" rel="stylesheet"/>
-      <div className="text-[39px] text-[#505156] text-center font-montserrat font-bold leading-none">
+      <div className={`text-[${fontSize}px] text-[#505156] text-center font-montserrat font-bold leading-none`}>
         DEVKORD
       </div>
     </div>
