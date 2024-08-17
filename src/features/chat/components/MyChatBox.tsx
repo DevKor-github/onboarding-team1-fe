@@ -1,3 +1,5 @@
+import CheckIcon from '../assets/check_icon.svg';
+
 import { formatTimeByDate } from '@utils/date';
 
 const tailVariants = {
@@ -24,7 +26,14 @@ export const MyChatBox = (chatProps: ChatProps) => {
         <div className={`${boxVariants[chatProps.style]} inline-flex min-h-12 min-w-24 max-w-64 bg-bgblue px-2 py-1 text-base text-bgwhite`}>
           <div className="w-full">
             <div className="mt-1 text-sm font-normal">{chatProps.text}</div>
-            <div className="mt-2 flex justify-end text-xs font-light">{formatTimeByDate(chatProps.time)}</div>
+            <div className="mt-2 flex items-center justify-end">
+              <div className="text-xs font-light">{formatTimeByDate(chatProps.time)}</div>
+              {chatProps.isChecked ? (
+                <div className="ml-1 h-2 w-4">
+                  <CheckIcon />
+                </div>
+              ) : null}
+            </div>
           </div>
         </div>
       </div>
