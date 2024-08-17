@@ -2,7 +2,7 @@ import EmoticonButton from '../assets/smile_icon.svg';
 import SendValidButton from '../assets/send_valid_icon.svg';
 import SendInValidButton from '../assets/send_invalid_icon.svg';
 import { useState } from 'react';
-import { useSendChat } from '@features/api/sendChat';
+import { useSendChat } from '@features/chat/api/sendChat';
 
 const sendButtonVariants = {
   valid: 'fill-bgblue',
