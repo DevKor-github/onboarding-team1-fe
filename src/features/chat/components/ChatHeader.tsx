@@ -1,5 +1,5 @@
 import { RoundProfile } from './RoundProfile';
-import MainLogo from '@assets/logo_main.svg';
+import MainLogo from '@assets/main_logo.svg';
 import SettingButton from '../assets/dots_icon.svg';
 
 export const ChatHeader = ({ userName, imgUrl }: { userName: string; imgUrl: string }) => {
