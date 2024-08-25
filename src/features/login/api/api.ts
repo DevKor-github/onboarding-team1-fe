@@ -1,19 +1,23 @@
-import axios from "axios";
+import axios, {AxiosResponse, AxiosRequestConfig} from "axios";
 import TokenService from "./token.service.ts";
 
 const instance = axios.create({
-    baseURL: "www.naver.com",
     headers: {
         "Content-Type": "application/json", // 추가학습 필요
+        "Authorization": "",
     },
 });
 
 instance.interceptors.request.use(
     (config) =>{
+        
         const token = TokenService.getLocalAccessToken();
         if(token){
-            config.headers['Authorization']= 'Bearer ' + token;
+            config.headers!.Authorization = 'Bearer ' + token;
+        } else{
+            config.headers!.Authorization = `${token}`;
         }
+        console.log("request\n", config);
         return config;
     },
     (error) =>{
@@ -23,17 +27,20 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
     (res) =>{
+        console.log("res\n", res);
         return res;
     },
     async (err) =>{
+        
         const originalConfig = err.config;
+        console.error("problem", err.tostring, originalConfig);
 
-        if (originalConfig.url !== "/auth/signin" && err.response) { // 수정 필요
+        if (originalConfig && originalConfig.url !== "/users/signin" && err.response) { // 수정 필요
             if(err.response.status == 401 && !originalConfig._retry){
                 originalConfig._retry = true;
 
                 try{
-                    const rs = await instance.post("/auth/refreshtoken", {
+                    const rs = await instance.post("/api/token", {
                         refreshToken: TokenService.getLocalRefreshToken(),
                     });
 
@@ -42,6 +49,7 @@ instance.interceptors.response.use(
 
                     return instance(originalConfig);
                 } catch(_error) {
+                    console.log("Token refresh failed", _error);
                     return Promise.reject(_error);
                 }
             }

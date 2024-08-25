@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       fontFamily:{
         montserrat: ['Montserrat', 'sans-serif', 'Pretendard'],
+        pre: ['Pretendard'],
       },
       colors: {
         "bg-1": "var(--bg-1)",

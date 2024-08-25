@@ -14,7 +14,8 @@ export const LogoM = ({size="", fontSize}:Props): JSX.Element=> {
       <img className="flex "
       alt="logo" src = {`src/features/login/assets/${size}`}/>
       <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Roboto&display=swap" rel="stylesheet"/>
-      <div className={`text-[${fontSize}px] text-[#505156] text-center font-montserrat font-bold leading-none`}>
+      <div className="text-[#505156] text-center font-montserrat font-bold leading-none"
+            style={{fontSize: `${fontSize}px`}}> 
         DEVKORD
       </div>
     </div>

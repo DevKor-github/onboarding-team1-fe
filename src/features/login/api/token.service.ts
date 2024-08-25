@@ -4,8 +4,15 @@ const getLocalRefreshToken = () => {
   };
   
 const getLocalAccessToken = () => {
-    const user = JSON.parse(localStorage.getItem("user") || "" );
-    return user?.accessToken;
+    //console.log(localStorage.getItem("user"));
+    if (localStorage.getItem("user")===null){
+      return "";
+    } else{
+      return localStorage.getItem("user");
+    }
+    /*const user = JSON.parse(localStorage.getItem("user") || "" );
+    console.log("user : ", user);
+    return user?.accessToken;*/
   };
   
 const updateLocalAccessToken = (token:any) => {
