@@ -6,8 +6,8 @@ import { useNavigate } from 'react-router-dom';
 export const ChatHeader = ({ userName, imgUrl }: { userName: string; imgUrl: string }) => {
   const navigate = useNavigate();
   return (
-    <header className="flex cursor-pointer flex-col shadow" onClick={() => navigate('/chatlist')}>
-      <div className="my-3 ml-5 w-20">
+    <header className="flex flex-col shadow">
+      <div className="my-3 ml-5 w-20 cursor-pointer" onClick={() => navigate('/chatlist')}>
         <MainLogo />
       </div>
       <div className="my-4 flex h-8 items-center justify-between px-6">
