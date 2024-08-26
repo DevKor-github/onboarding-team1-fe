@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import CameraIcon from '../assets/camera_icon.svg';
 import { usePostRegister } from '../api/postRegister';
 import { RegisterType } from '../types/register';
+import { useNavigate } from 'react-router-dom';
 
 interface IAuthForm extends RegisterType {
   profileImgList: FileList;
@@ -12,7 +13,12 @@ interface IAuthForm extends RegisterType {
 }
 
 export const RegisterForm = () => {
-  const registerMutation = usePostRegister({});
+  const navigate = useNavigate();
+  const registerMutation = usePostRegister({
+    mutationConfig: {
+      onSuccess: () => navigate('/login'),
+    },
+  });
   const {
     register,
     formState: { errors },

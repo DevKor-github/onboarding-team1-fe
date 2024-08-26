@@ -7,27 +7,27 @@ import { chatListLoader } from '../../pages/ChatListPage';
 export const createRouter = (queryClient: QueryClient) => {
   return createBrowserRouter([
     {
-      path: '/login',
-      lazy: async () => {
-        const { LoginPage } = await import('../../pages/LoginPage');
-        return {
-          Component: LoginPage,
-        };
-      },
-    },
-    {
-      path: '/register',
-      lazy: async () => {
-        const { RegisterPage } = await import('../../pages/RegisterPage');
-        return {
-          Component: RegisterPage,
-        };
-      },
-    },
-    {
       path: '/',
       element: <AppRoot />, //여기에 로그인 여부 확인하는 컴포넌트로 감싸기
       children: [
+        {
+          path: '/login',
+          lazy: async () => {
+            const { LoginPage } = await import('../../pages/LoginPage');
+            return {
+              Component: LoginPage,
+            };
+          },
+        },
+        {
+          path: '/register',
+          lazy: async () => {
+            const { RegisterPage } = await import('../../pages/RegisterPage');
+            return {
+              Component: RegisterPage,
+            };
+          },
+        },
         {
           path: 'chatList',
           lazy: async () => {
@@ -39,7 +39,7 @@ export const createRouter = (queryClient: QueryClient) => {
           loader: chatListLoader(queryClient),
         },
         {
-          path: 'chat',
+          path: 'chat/:currentId/:userId',
           lazy: async () => {
             const { ChatPage } = await import('../../pages/ChatPage');
             return {
