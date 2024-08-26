@@ -13,7 +13,7 @@ export const ChatListPage = () => {
   const [chatListData, setChatListData] = useState([]);
   const accesToken = TokenService.getLocalAccessToken();
 
-  const url = `http://localhost:8080/chat/list?token=${accesToken}`;
+  const url = `http://springboot-developer-env.eba-tb7bgpjh.ap-northeast-2.elasticbeanstalk.com/chat/list?token=${accesToken}`;
 
   useEffect(()=>{
     api.get(url)

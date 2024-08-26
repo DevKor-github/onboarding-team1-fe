@@ -19,8 +19,8 @@ const Login: React.FC<Props>=()=>{
         navigate('/chatlist');
         //<Link to="/http://localhost:5173/chatlist"/>
         //window.location.reload();
-      },
-      (error)=>{
+      })
+      .catch((error)=>{
         console.log("email: ", email, "password: ", password);
         console.error(error.toString());
       }

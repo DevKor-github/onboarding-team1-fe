@@ -7,7 +7,7 @@ interface Props{
 }
 
 const ChatRoom = ({image, nickname, time}:Props) =>{
-
+    //console.log(image.length);
     return(
         <div className="flex justify-between items-center w-[393px] h-[62px] py-[15px] shadow-[0_1px_0_#E5E5EA]">
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"/>
@@ -15,7 +15,7 @@ const ChatRoom = ({image, nickname, time}:Props) =>{
                 <img
                     className="w-[32px] h-[32px] mr-[4px]"
                     alt="Profile Image"
-                    src={image!=="" ? image : "src/features/chatList/assets/avatar.svg"}
+                    src={image.length!==89 ? image : "src/features/chatList/assets/avatar.svg"}
                 />
                 <div className="text-[14px] text-[#2C2C2E] font-pre font-weight: 400">
                     {nickname}

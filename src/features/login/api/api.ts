@@ -40,7 +40,7 @@ instance.interceptors.response.use(
                 originalConfig._retry = true;
 
                 try{
-                    const rs = await instance.post("/api/token", {
+                    const rs = await instance.post("http://localhost:8080/api/token", {
                         refreshToken: TokenService.getLocalRefreshToken(),
                     });
 

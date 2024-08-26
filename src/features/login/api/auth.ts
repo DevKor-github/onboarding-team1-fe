@@ -3,7 +3,7 @@ import api from "./api";
 import TokenService from "./token.service";
 
 // register 기능 추가 필요
-const loginURL:string = "http://localhost:8080/users/login";
+const loginURL:string = "http://springboot-developer-env.eba-tb7bgpjh.ap-northeast-2.elasticbeanstalk.com/users/login";
 export const login = (email: string, password: string)=>{
     return api
     .post(loginURL, { email, password })
@@ -11,7 +11,7 @@ export const login = (email: string, password: string)=>{
         console.log("response\n", response );
         
         if (response.headers['content-type']?.includes('application/json')) {
-            localStorage.setItem("user", response.data);
+            localStorage.setItem("user", response.data.accessToken);
             return response.data;
         } else {
             
@@ -20,6 +20,7 @@ export const login = (email: string, password: string)=>{
     })
     .catch((error) => {
         console.error("Failed to parse JSON response:", error);
+        throw new Error("Wrong password");
         // 추가적인 오류 처리
     });
 };
