@@ -1,9 +1,10 @@
+import { ChatProps } from '@features/chat/types/chat';
 import { useEffect, useRef, useState } from 'react';
 
 const WS_URL = import.meta.env.VITE_WEBSOCKET_URL;
 const RETRY_LIMIT = 5;
 
-export const useWebSocket = (query: string) => {
+export const useWebSocket = (query: string, userId: string, textArray: ChatProps[], setTextArray: React.Dispatch<React.SetStateAction<ChatProps[]>>) => {
   const websocketRef = useRef<null | WebSocket>(null);
   const [message, setMessage] = useState('');
   const retryCount = useRef(0);
@@ -35,7 +36,16 @@ export const useWebSocket = (query: string) => {
         };
 
         wsRef.current.onmessage = (event: MessageEvent) => {
+          console.log('onmessage');
+          console.log(event.data);
           setMessage(event.data);
+          const date = new Date();
+          const chatData = JSON.parse(event.data);
+          if (chatData.messageType === 'TALK' && chatData.senderId !== userId) {
+            setTextArray((prevState) => [...prevState, { text: chatData.message, time: date, type: 'OTHER' }]);
+          } else {
+            setTextArray((prevState) => [...prevState, { text: chatData.message, time: date, type: 'MY' }]);
+          }
         };
       }
     };

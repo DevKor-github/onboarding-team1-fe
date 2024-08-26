@@ -16,8 +16,8 @@ export const chatLoader = (queryClient: QueryClient) => async () => {
 export const ChatPage = () => {
   const { currentId, userId } = useParams();
   const chatRoomId = Math.min(Number(currentId), Number(userId)) + '-' + Math.max(Number(currentId), Number(userId));
-  const websocket = useWebSocket('/chat?chatRoomId=' + chatRoomId);
   const [textArray, setTextArray] = useState<ChatProps[]>([]);
+  const websocket = useWebSocket('/chat?chatRoomId=' + chatRoomId, currentId || '', textArray, setTextArray);
   const date = new Date();
   const location = useLocation();
 
@@ -27,7 +27,13 @@ export const ChatPage = () => {
       const chatData = JSON.parse(websocket.message);
       if (chatData.messageType === 'TALK' && chatData.senderId !== userId) setTextArray([...textArray, { text: chatData.message, time: date, type: 'OTHER' }]);
     }
-  }, [websocket.message]);
+    console.log(textArray);
+  }, [websocket.message, websocket.websocketRef]);
+
+  useEffect(() => {
+    console.log('arraay');
+    console.log(textArray);
+  }, [textArray]);
 
   return (
     <div className="flex h-screen w-1/3 min-w-96 max-w-2xl flex-col border bg-white">
