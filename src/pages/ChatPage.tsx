@@ -46,7 +46,7 @@ export const ChatPage = () => {
       <ChatHeader userName={location.state.nickname} imgUrl={location.state.profileImg} />
       <div className="flex-1 overflow-y-scroll scrollbar-hide" ref={scrollRef}>
         {textArray.map((chat, index) => {
-          const style = index != 0 && textArray[textArray.length - 1].type === chat.type ? 'none' : 'tail';
+          const style = index != 0 && textArray[index - 1].type === chat.type ? 'none' : 'tail';
           if (chat.type === 'MY') return <MyChatBox style={style} text={chat.text} time={date} isChecked={false} key={'mychat' + index} />;
           else return <OtherChatBox name={location.state.nickname} profileImgUrl={location.state.profileImg} style={style} text={chat.text} time={date} key={'otherchat' + index} />;
         })}
