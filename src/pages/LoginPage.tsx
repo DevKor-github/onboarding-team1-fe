@@ -1,7 +1,10 @@
+import { Form } from "react-router-dom";
+import Login from "../features/login/components/Login";
+
 export const LoginPage = () => {
   return (
     <>
-      <h1>Login Route</h1>
+      <Login/>
     </>
   );
 };
