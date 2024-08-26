@@ -17,6 +17,7 @@ type ChatProps = {
   time: Date;
   style: 'tail' | 'none';
   profileImgUrl?: string;
+  name?: string;
 };
 
 export const OtherChatBox = (chatProps: ChatProps) => {
@@ -26,7 +27,7 @@ export const OtherChatBox = (chatProps: ChatProps) => {
       <div className={`${tailVariants[chatProps.style]} flex`}>
         <div className={`${boxVariants[chatProps.style]} inline-flex min-h-16 min-w-24 max-w-64 bg-bggray px-2 py-1 text-base`}>
           <div className="w-full">
-            <div className="text-sm font-semibold text-label1">유저 이름</div>
+            <div className="text-sm font-semibold text-label1">{chatProps.name}</div>
             <div className="mt-1 text-sm font-normal text-label1">{chatProps.text}</div>
             <div className="mt-2 flex justify-end text-xs font-light text-label3">{formatTimeByDate(chatProps.time)}</div>
           </div>

@@ -38,7 +38,7 @@ export const useWebSocket = (query: string, userId: string, textArray: ChatProps
         wsRef.current.onmessage = (event: MessageEvent) => {
           console.log('onmessage');
           console.log('userId', userId);
-          console.log(event.data);
+          console.log('backend', event.data);
           setMessage(event.data);
           const date = new Date();
           const chatData = JSON.parse(event.data);

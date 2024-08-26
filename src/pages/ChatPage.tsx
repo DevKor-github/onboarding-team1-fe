@@ -38,10 +38,10 @@ export const ChatPage = () => {
         {textArray.map((chat, index) => {
           const style = index != 0 && textArray[textArray.length - 1].type === chat.type ? 'none' : 'tail';
           if (chat.type === 'MY') return <MyChatBox style={style} text={chat.text} time={date} isChecked={false} key={'mychat' + index} />;
-          else return <OtherChatBox profileImgUrl={location.state.profileImg} style={style} text={chat.text} time={date} key={'otherchat' + index} />;
+          else return <OtherChatBox name={location.state.nickname} profileImgUrl={location.state.profileImg} style={style} text={chat.text} time={date} key={'otherchat' + index} />;
         })}
       </div>
-      <ChatInputField websocket={websocket} textArray={textArray} setTextArray={setTextArray} chatRoomId={chatRoomId} currentId={Number(userId) || 0} />
+      <ChatInputField websocket={websocket} textArray={textArray} setTextArray={setTextArray} chatRoomId={chatRoomId} currentId={Number(currentId) || 0} />
     </div>
   );
 };

@@ -31,10 +31,11 @@ export const ChatInputField = ({
   const onClick = () => {
     if (text) {
       const date = new Date();
-      websocket.sendMessage(JSON.stringify({ chatRoomId: chatRoomId, senderId: Number(currentId), message: text, timestamp: date, messageType: 'TALK' }));
+      websocket.sendMessage(JSON.stringify({ chatRoomId: chatRoomId, senderId: currentId, message: text, timestamp: date, messageType: 'TALK' }));
 
       setTextArray([...textArray, { text: text, isChecked: true, time: date, style: 'none', type: 'MY' }]);
       setText('');
+      console.log('current', currentId);
     }
   };
 
