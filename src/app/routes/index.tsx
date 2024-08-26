@@ -16,6 +16,15 @@ export const createRouter = (queryClient: QueryClient) => {
       },
     },
     {
+      path: '/register',
+      lazy: async () => {
+        const { RegisterPage } = await import('../../pages/RegisterPage');
+        return {
+          Component: RegisterPage,
+        };
+      },
+    },
+    {
       path: '/',
       element: <AppRoot />, //여기에 로그인 여부 확인하는 컴포넌트로 감싸기
       children: [

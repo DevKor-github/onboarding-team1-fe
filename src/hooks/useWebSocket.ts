@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 
-const WS_URL = 'ws://localhost:1234/ws';
+const WS_URL = import.meta.env.VITE_WEBSOCKET_URL;
 const RETRY_LIMIT = 5;
 
-export const useWebSocket = () => {
+export const useWebSocket = (query: string) => {
   const websocketRef = useRef<null | WebSocket>(null);
-  const [message, setMessage] = useState();
+  const [message, setMessage] = useState('');
   const retryCount = useRef(0);
 
   useEffect(() => {
-    websocketRef.current = new WebSocket(WS_URL);
+    websocketRef.current = new WebSocket(WS_URL + query);
 
     const setWebSocket = (wsRef: React.MutableRefObject<null | WebSocket>) => {
       if (wsRef.current) {
@@ -53,8 +53,15 @@ export const useWebSocket = () => {
   const sendMessage = (message: string) => {
     if (websocketRef.current && websocketRef.current.readyState === WebSocket.OPEN) {
       websocketRef.current.send(message);
+      console.log(message);
     }
   };
 
   return { websocketRef, message, sendMessage };
+};
+
+export type WebSocketType = {
+  websocketRef: React.MutableRefObject<WebSocket | null>;
+  message: string;
+  sendMessage: (message: string) => void;
 };

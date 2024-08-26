@@ -26,6 +26,7 @@ module.exports = {
         label1: '#2C2C2E',
         label2: '#3D3D3D',
         label3: '#666668',
+        label4: '#D9D9D9'
       },
     },
   },

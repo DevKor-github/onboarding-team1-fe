@@ -1,17 +1,18 @@
 import EmoticonButton from '../assets/smile_icon.svg';
 import SendValidButton from '../assets/send_valid_icon.svg';
 import SendInValidButton from '../assets/send_invalid_icon.svg';
-import { useState } from 'react';
-import { useSendChat } from '@features/chat/api/sendChat';
+import { useEffect, useState } from 'react';
+import { WebSocketType, useWebSocket } from '@hooks/useWebSocket';
+import { ChatProps } from '../types/chat';
 
 const sendButtonVariants = {
   valid: 'fill-bgblue',
   invalid: '',
 };
 
-export const ChatInputField = ({ receiveEmail }: { receiveEmail: string }) => {
+export const ChatInputField = ({ textArray, setTextArray, websocket }: { textArray: ChatProps[]; setTextArray: React.Dispatch<React.SetStateAction<ChatProps[]>>; websocket: WebSocketType }) => {
   const [text, setText] = useState('');
-  const sendChatMutation = useSendChat({ receiveEmail });
+  //const sendChatMutation = useSendChat({ receiveEmail: chatRoomId });
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
@@ -19,10 +20,23 @@ export const ChatInputField = ({ receiveEmail }: { receiveEmail: string }) => {
   const onClick = () => {
     if (text) {
       const date = new Date();
-      //sendChatMutation.mutate({ receiveEmail, text, date });
+      websocket.sendMessage(JSON.stringify({ chatRoomId: '1-2', senderId: 1, message: text, timestamp: date, messageType: 'TALK' }));
+
+      setTextArray([...textArray, { text: text, isChecked: true, time: date, style: 'none', type: 'MY' }]);
       setText('');
     }
   };
+
+  const onEnter = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      onClick();
+    }
+  };
+
+  useEffect(() => {
+    const date = new Date();
+    websocket.sendMessage(JSON.stringify({ chatRoomId: '1-2', senderId: 1, message: text, timestamp: date, messageType: 'ENTER' }));
+  }, []);
 
   return (
     <div className="h-20 w-full border pb-7 pt-3">
@@ -30,8 +44,8 @@ export const ChatInputField = ({ receiveEmail }: { receiveEmail: string }) => {
         <button className="mr-3 flex h-4 w-4 items-center">
           <EmoticonButton />
         </button>
-        <div className="flex h-10 w-4/5 items-center justify-between rounded-full bg-bggray px-5">
-          <input onChange={onChange} value={text} placeholder="Start typing..." className="mr-5 w-11/12 bg-transparent text-sm font-normal text-label3 focus:outline-none"></input>
+        <div className="bg-bggray flex h-10 w-4/5 items-center justify-between rounded-full px-5">
+          <input onKeyDown={onEnter} onChange={onChange} value={text} placeholder="Start typing..." className="text-label3 mr-5 w-11/12 bg-transparent text-sm font-normal focus:outline-none"></input>
           <button onClick={onClick} className={`${text ? sendButtonVariants.valid : sendButtonVariants.invalid} fill-blue h-4 w-4`}>
             {text ? <SendValidButton /> : <SendInValidButton />}
           </button>
