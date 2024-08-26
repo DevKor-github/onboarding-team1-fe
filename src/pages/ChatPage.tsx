@@ -15,7 +15,8 @@ export const chatLoader = (queryClient: QueryClient) => async () => {
 
 export const ChatPage = () => {
   const { currentId, userId } = useParams();
-  const websocket = useWebSocket('/chat?chatRoomId=' + currentId + '-' + userId);
+  const chatRoomId = Math.min(Number(currentId), Number(userId)) + '-' + Math.max(Number(currentId), Number(userId));
+  const websocket = useWebSocket('/chat?chatRoomId=' + chatRoomId);
   const [textArray, setTextArray] = useState<ChatProps[]>([]);
   const date = new Date();
   const location = useLocation();
@@ -38,7 +39,7 @@ export const ChatPage = () => {
           else return <OtherChatBox profileImgUrl={location.state.profileImg} style={style} text={chat.text} time={date} key={'otherchat' + index} />;
         })}
       </div>
-      <ChatInputField websocket={websocket} textArray={textArray} setTextArray={setTextArray} chatRoomId={currentId + '-' + userId || ''} currentId={Number(userId) || 0} />
+      <ChatInputField websocket={websocket} textArray={textArray} setTextArray={setTextArray} chatRoomId={chatRoomId} currentId={Number(userId) || 0} />
     </div>
   );
 };
