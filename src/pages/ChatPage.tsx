@@ -26,6 +26,16 @@ export const ChatPage = () => {
     scrollToBottom();
   }, [textArray]);
 
+  useEffect(() => {
+    console.log('onmessage');
+    if (websocket.message) {
+      console.log('websocket message useEffect');
+      const date = new Date();
+      const chatData = JSON.parse(websocket.message);
+      setTextArray([...textArray, { text: chatData.message, time: date, type: 'OTHER' }]);
+    }
+  }, [websocket.message, websocket.websocketRef]);
+
   const scrollToBottom = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
