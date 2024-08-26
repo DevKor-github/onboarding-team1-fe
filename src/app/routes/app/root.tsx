@@ -5,7 +5,9 @@ export const AppRoot = () => {
   return (
     <>
       <Suspense fallback={<>Loading...</>}>
-        <Outlet />
+        <div className="flex h-screen w-screen justify-center bg-yellow-100">
+          <Outlet />
+        </div>
       </Suspense>
     </>
   );

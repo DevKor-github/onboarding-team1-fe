@@ -2,6 +2,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import { queryClient } from '../lib/react-query';
 
+// add for login context
 type AppProviderProps = {
   children: React.ReactNode;
 };
@@ -9,7 +10,9 @@ type AppProviderProps = {
 export const AppProvider = ({ children }: AppProviderProps) => {
   return (
     <Suspense>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        {children}
+      </QueryClientProvider>
     </Suspense>
   );
 };
