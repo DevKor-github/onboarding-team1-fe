@@ -8,11 +8,16 @@ import api from '../../login/api/api';
 const ChatList = (data: any) => {
   const navigate = useNavigate();
 
-  const handleChatRoomClick = (currentUserId: any, userId: any) => {
+  const handleChatRoomClick = (currentUserId: any, userId: any, profileImg: any, nickname: any) => {
     api
       .get(import.meta.env.VITE_API_URL + `/chat/${currentUserId}/${userId}`)
       .then((response) => {
-        navigate(`/chat/${currentUserId}/${userId}`);
+        navigate(`/chat/${currentUserId}/${userId}`, {
+          state: {
+            profileImg: profileImg,
+            nickname: nickname,
+          },
+        });
       })
       .catch((error) => {
         //window.location.reload();
@@ -43,7 +48,7 @@ const ChatList = (data: any) => {
               {data.data.users.map((user: any) => {
                 return (
                   <li key={user.email}>
-                    <button onClick={() => handleChatRoomClick(data.data.currentUser.id, user.id)}>
+                    <button onClick={() => handleChatRoomClick(data.data.currentUser.id, user.id, user.profileImg, user.nickname)}>
                       <ChatRoom nickname={user.nickname} time="오후 8:00" image={user.profileImg}></ChatRoom>
                     </button>
                   </li>

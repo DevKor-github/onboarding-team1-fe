@@ -10,7 +10,19 @@ const sendButtonVariants = {
   invalid: '',
 };
 
-export const ChatInputField = ({ textArray, setTextArray, websocket }: { textArray: ChatProps[]; setTextArray: React.Dispatch<React.SetStateAction<ChatProps[]>>; websocket: WebSocketType }) => {
+export const ChatInputField = ({
+  textArray,
+  setTextArray,
+  websocket,
+  chatRoomId,
+  currentId,
+}: {
+  chatRoomId: string;
+  currentId: number;
+  textArray: ChatProps[];
+  setTextArray: React.Dispatch<React.SetStateAction<ChatProps[]>>;
+  websocket: WebSocketType;
+}) => {
   const [text, setText] = useState('');
   //const sendChatMutation = useSendChat({ receiveEmail: chatRoomId });
 
@@ -20,7 +32,7 @@ export const ChatInputField = ({ textArray, setTextArray, websocket }: { textArr
   const onClick = () => {
     if (text) {
       const date = new Date();
-      websocket.sendMessage(JSON.stringify({ chatRoomId: '1-2', senderId: 1, message: text, timestamp: date, messageType: 'TALK' }));
+      websocket.sendMessage(JSON.stringify({ chatRoomId: chatRoomId, senderId: currentId, message: text, timestamp: date, messageType: 'TALK' }));
 
       setTextArray([...textArray, { text: text, isChecked: true, time: date, style: 'none', type: 'MY' }]);
       setText('');
@@ -44,8 +56,8 @@ export const ChatInputField = ({ textArray, setTextArray, websocket }: { textArr
         <button className="mr-3 flex h-4 w-4 items-center">
           <EmoticonButton />
         </button>
-        <div className="bg-bggray flex h-10 w-4/5 items-center justify-between rounded-full px-5">
-          <input onKeyDown={onEnter} onChange={onChange} value={text} placeholder="Start typing..." className="text-label3 mr-5 w-11/12 bg-transparent text-sm font-normal focus:outline-none"></input>
+        <div className="flex h-10 w-4/5 items-center justify-between rounded-full bg-bggray px-5">
+          <input onKeyDown={onEnter} onChange={onChange} value={text} placeholder="Start typing..." className="mr-5 w-11/12 bg-transparent text-sm font-normal text-label3 focus:outline-none"></input>
           <button onClick={onClick} className={`${text ? sendButtonVariants.valid : sendButtonVariants.invalid} fill-blue h-4 w-4`}>
             {text ? <SendValidButton /> : <SendInValidButton />}
           </button>
