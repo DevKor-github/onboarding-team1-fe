@@ -24,7 +24,6 @@ export const ChatInputField = ({
   websocket: WebSocketType;
 }) => {
   const [text, setText] = useState('');
-  //const sendChatMutation = useSendChat({ receiveEmail: chatRoomId });
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
@@ -47,7 +46,7 @@ export const ChatInputField = ({
 
   useEffect(() => {
     const date = new Date();
-    websocket.sendMessage(JSON.stringify({ chatRoomId: '1-2', senderId: 1, message: text, timestamp: date, messageType: 'ENTER' }));
+    websocket.sendMessage(JSON.stringify({ chatRoomId: chatRoomId, senderId: currentId, message: text, timestamp: date, messageType: 'ENTER' }));
   }, []);
 
   return (
