@@ -37,11 +37,12 @@ export const useWebSocket = (query: string, userId: string, textArray: ChatProps
 
         wsRef.current.onmessage = (event: MessageEvent) => {
           console.log('onmessage');
+          console.log('userId', userId);
           console.log(event.data);
           setMessage(event.data);
           const date = new Date();
           const chatData = JSON.parse(event.data);
-          if (chatData.messageType === 'TALK' && chatData.senderId !== userId) {
+          if (chatData.senderId != userId) {
             setTextArray((prevState) => [...prevState, { text: chatData.message, time: date, type: 'OTHER' }]);
           } else {
             setTextArray((prevState) => [...prevState, { text: chatData.message, time: date, type: 'MY' }]);

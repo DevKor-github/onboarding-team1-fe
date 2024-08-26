@@ -4,7 +4,7 @@ import { ChatHeader } from '@features/chat/components/ChatHeader';
 import { MyChatBox } from '@features/chat/components/MyChatBox';
 import { OtherChatBox } from '@features/chat/components/OtherChatBox';
 import { ChatInputField } from '@features/chat/components/ChatInputField';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ChatProps } from '@features/chat/types/chat';
 import { useLocation, useParams } from 'react-router-dom';
 
@@ -20,25 +20,21 @@ export const ChatPage = () => {
   const websocket = useWebSocket('/chat?chatRoomId=' + chatRoomId, currentId || '', textArray, setTextArray);
   const date = new Date();
   const location = useLocation();
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (websocket.message) {
-      const date = new Date();
-      const chatData = JSON.parse(websocket.message);
-      if (chatData.messageType === 'TALK' && chatData.senderId !== userId) setTextArray([...textArray, { text: chatData.message, time: date, type: 'OTHER' }]);
-    }
-    console.log(textArray);
-  }, [websocket.message, websocket.websocketRef]);
-
-  useEffect(() => {
-    console.log('arraay');
-    console.log(textArray);
+    scrollToBottom();
   }, [textArray]);
 
+  const scrollToBottom = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  };
   return (
     <div className="flex h-screen w-1/3 min-w-96 max-w-2xl flex-col border bg-white">
       <ChatHeader userName={location.state.nickname} imgUrl={location.state.profileImg} />
-      <div className="flex-1 overflow-y-scroll scrollbar-hide">
+      <div className="flex-1 overflow-y-scroll scrollbar-hide" ref={scrollRef}>
         {textArray.map((chat, index) => {
           const style = index != 0 && textArray[textArray.length - 1].type === chat.type ? 'none' : 'tail';
           if (chat.type === 'MY') return <MyChatBox style={style} text={chat.text} time={date} isChecked={false} key={'mychat' + index} />;
