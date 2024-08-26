@@ -3,9 +3,11 @@ import { MutationConfig } from '@lib/react-query';
 import { UseMutationResult, useMutation, useQueryClient } from '@tanstack/react-query';
 
 type SendChatRequest = {
-  text: string;
-  date: Date;
-  receiveEmail: string;
+  messageType: 'ENTER' | 'TALK';
+  chatRoomId: string;
+  senderId: number;
+  message: string;
+  timestamp: Date;
 };
 
 type SendChatResponse = {};

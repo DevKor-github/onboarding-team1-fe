@@ -2,18 +2,17 @@ import { useForm } from 'react-hook-form';
 
 import CameraIcon from '../assets/camera_icon.svg';
 import { usePostRegister } from '../api/postRegister';
+import { RegisterType } from '../types/register';
 
-interface IAuthForm {
-  name: string;
-  password: string;
+interface IAuthForm extends RegisterType {
+  profileImgList: FileList;
   passwordCheck: string;
-  profileImg: File;
   extraError?: string;
+  [key: string]: any;
 }
 
 export const RegisterForm = () => {
   const registerMutation = usePostRegister({});
-
   const {
     register,
     formState: { errors },
@@ -21,13 +20,25 @@ export const RegisterForm = () => {
     setError,
   } = useForm<IAuthForm>({ mode: 'onBlur' });
 
+  const onSubmit = (data: IAuthForm) => {
+    const formData = new FormData();
+
+    for (const key in data) {
+      if (key === 'profileImgList') {
+        formData.append('profileImg', data[key][0]);
+      } else if (key === 'email') {
+        formData.append(key, data[key]);
+        formData.append('nickname', data[key]);
+      } else {
+        formData.append(key, data[key]);
+      }
+    }
+    registerMutation.mutate(formData);
+  };
+
   const isValid = (data: IAuthForm) => {
     if (data.password !== data.passwordCheck) {
-      setError(
-        'passwordCheck', // 에러 핸들링할 input요소 name
-        { message: '비밀번호가 일치하지 않습니다.' }, // 에러 메세지
-        { shouldFocus: true }, // 에러가 발생한 input으로 focus 이동
-      );
+      setError('passwordCheck', { message: '비밀번호가 일치하지 않습니다.' }, { shouldFocus: true });
       return false;
     }
     return true;
@@ -38,11 +49,12 @@ export const RegisterForm = () => {
       <div className="mb-7 mt-14 text-lg font-semibold text-label1">회원가입</div>
       <form
         className="flex flex-col items-center"
+        encType="multipart/form-data"
         onSubmit={handleSubmit((data) => {
-          if (isValid(data)) registerMutation.mutate({ ...data });
+          if (isValid(data)) onSubmit(data);
         })}
       >
-        <input {...register('name', { required: true })} type="text" className="mb-3 h-12 w-72 rounded-lg border border-label4 px-3 py-2 text-base placeholder-label4" placeholder="이름" />
+        <input {...register('email', { required: true })} type="text" className="mb-3 h-12 w-72 rounded-lg border border-label4 px-3 py-2 text-base placeholder-label4" placeholder="이름" />
         <input {...register('password', { required: true })} type="password" className="mb-3 h-12 w-72 rounded-lg border border-label4 px-3 py-2 text-base placeholder-label4" placeholder="비밀번호" />
         <input
           {...register('passwordCheck', { required: true })}
@@ -50,7 +62,7 @@ export const RegisterForm = () => {
           className="h-12 w-72 rounded-lg border border-label4 px-3 py-2 text-base placeholder-label4"
           placeholder="비밀번호 확인"
         />
-        <input {...register('profileImg', { required: true })} id="profile_img" type="file" accept="image/jpg,impge/png,image/jpeg,image/gif" className="hidden" placeholder="프로필 이미지" />
+        <input {...register('profileImgList', { required: true })} id="profile_img" type="file" accept="image/*" className="hidden" placeholder="프로필 이미지" />
         <div className="text-base text-red-500">{errors?.passwordCheck?.message}</div>
         <label htmlFor="profile_img" className="mb-3 mt-3 flex h-12 w-72 cursor-pointer items-center rounded-lg border border-label4 bg-[#F4F4F4] px-3 py-2 text-base text-label4">
           <div className="mr-2 h-5 w-5">

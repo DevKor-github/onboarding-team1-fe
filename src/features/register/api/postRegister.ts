@@ -1,17 +1,15 @@
 import { api } from '@lib/api';
 import { MutationConfig } from '@lib/react-query';
 import { UseMutationResult, useMutation, useQueryClient } from '@tanstack/react-query';
+import { RegisterType } from '../types/register';
 
-type PostRegisterRequest = {
-  name: string;
-  password: string;
-  profileImg: File;
-};
+type PostRegisterRequest = RegisterType;
 
 type PostRegisterResponse = {};
 
-const postRegister = (data: PostRegisterRequest): Promise<PostRegisterResponse> => {
-  return api.post('/user/signup', data);
+const postRegister = (data: FormData): Promise<PostRegisterResponse> => {
+  console.log(data);
+  return api.post('/users/signup', data);
 };
 
 type UsePostRegisterOptions = {
